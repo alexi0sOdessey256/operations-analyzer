@@ -30,11 +30,13 @@ with open(csv_file, "r") as file:
     best_rate = 0
     worst_employees = []
     worst_rate = 101
+    employees = []
 
     for employee in reader:
         employee["calls"] = int(employee["calls"])
         employee["resolved"] = int(employee["resolved"])
         employee["unresolved"] = employee["calls"] - employee["resolved"]
+        employees.append(employee)
         
 
         total_calls += employee["calls"]
@@ -103,3 +105,37 @@ with open(csv_file, "r") as file:
     print("Lowest performers:", ", ".join(worst_employees))
     print("Lowest resolution rate:", round(worst_rate, 2), "%")
     print()
+    found = False
+    employee_name = input("Enter an employee name: ")
+
+    for employee in employees:
+        if employee["name"].lower() == employee_name.lower():
+            found = True
+
+            print()
+            print("Employee Performance")
+            print("====================")
+            print()
+            print("Name: ", employee["name"])
+            print("Calls: ", employee["calls"])
+            print("Resolved: ", employee["resolved"])
+            print("Unresolved: ", employee["unresolved"])
+
+            resolution_rate = calculate_resolution_rate(
+                employee["calls"],
+                employee["resolved"]
+            )
+
+            if resolution_rate >= 90:
+                performance = "Excellent"
+            elif resolution_rate >= 80:
+                performance = "Good"
+            else:
+                performance = "Needs Improvement"
+            
+            print("Resolution Rate: ", round(resolution_rate, 2), "%")
+            print("Performance: ", performance)
+
+    if not found:
+        print()
+        print("Employee not found.")
