@@ -52,6 +52,7 @@ The program uses a CSV file containing:
 - Calculates team-wide performance
 - Identifies top-performing employees
 - Handles ties between top performers
+- Allow users to search for an employee and view their performance 
 
 ## Technologies Used
 
