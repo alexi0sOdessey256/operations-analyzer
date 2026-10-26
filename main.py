@@ -28,6 +28,8 @@ with open(csv_file, "r") as file:
     total_unresolved = 0
     best_employees = []
     best_rate = 0
+    worst_employees = []
+    worst_rate = 101
 
     for employee in reader:
         employee["calls"] = int(employee["calls"])
@@ -73,7 +75,15 @@ with open(csv_file, "r") as file:
 
         elif resolution_rate == best_rate:
             best_employees.append(employee["name"])
-    
+
+        #Determine the worst performing employee(s) based on their resolution rate.
+        if resolution_rate < worst_rate:
+            worst_rate = resolution_rate
+            worst_employees = [employee["name"]]
+
+        elif resolution_rate == worst_rate:
+            worst_employees.append(employee["name"])
+
     overall_rate = total_resolved / total_calls * 100
 
 #Output of Team Performance Summary.
@@ -89,3 +99,7 @@ with open(csv_file, "r") as file:
     print()
     print("Top performers:", ", ".join(best_employees))
     print("Top resolution rate:", round(best_rate, 2), "%")
+    print()
+    print("Lowest performers:", ", ".join(worst_employees))
+    print("Lowest resolution rate:", round(worst_rate, 2), "%")
+    print()
